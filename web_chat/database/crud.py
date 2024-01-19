@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from ..oauth2 import get_password_hash
-
+from sqlalchemy.exc import IntegrityError
 from . import models, schemas
 
 
@@ -21,21 +21,26 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 def create_user(db: Session, user: schemas.UserCreate):
     fake_hashed_password = get_password_hash(user.password)
     db_user = models.User(username=user.username, hashed_password=fake_hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+    try:
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    except IntegrityError as e:
+        if "UNIQUE constraint failed: users.username" in str(e):
+            raise ValueError("用户名已被注册")
+
 
 def delete_user(db: Session, user_id: int):
     user_to_delete = db.query(models.User).filter(models.User.id == user_id).first()
     if user_to_delete:
         db.delete(user_to_delete)
         db.commit()
-        #db.refresh(user_to_delete)
     return user_to_delete
 
-def get_chats(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Chat).offset(skip).limit(limit).all()
+def get_chats(db: Session, user: models.User):
+    return db.query(models.Chat).filter(models.Chat.owner_id == user.id).all()
+
 
 def delete_chat(db: Session, user_id: int, chat_title: str):
     chat_to_delete = db.query(models.Chat).filter(models.Chat.owner_id == user_id, models.Chat.title == chat_title,).first()

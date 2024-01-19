@@ -1,61 +1,155 @@
-<!DOCTYPE html>
+{% extends 'base.html' %} {% block head %}
+<style>
+  .container {
+    border: 1px solid red;
+    width: 60%;
+    height: 800px;
+    margin: 60px auto;
+  }
+  .inputbox {
+    position: fixed;
+    border: 1px solid red;
+    width: 60%;
+    left: 0px;
+    right: 0px;
+    bottom: 30px;
+    height: 60px;
+    margin: 20px auto;
+  }
+  textarea {
+    height: 95%;
+    width: 90%;
+  }
+  .submit-btn {
+    float: right;
+    margin: 10px 12px;
+  }
+  .message {
+    width: 90%; /* 设置为100%确保在父容器内 */
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-left: 50px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    word-wrap: break-word; /* 长单词换行 */
+    overflow: hidden; /* 超出部分隐藏 */
+    margin-bottom: 10px; /* 为了防止多个对话框堆叠在一起时的间隔 */
+  }
+  .chats-list {
+    position: fixed;
+    left: 30px;
+    top: 110px;
+    border: 3px solid red;
+    width: 15%;
+    height: 800px;
+    background-color: #dddddd;
+  }
+</style>
+{% endblock head %}
+<!-- <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/static/bootstrap5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bootstrap5/css/bootstrap.min.css" />
     <style>
-        .container{
-            border:1px solid red;
-            width: 60%;
-            height: 800px;
-            margin: 60px auto;
-        }
-        .inputbox{
-            position: fixed;
-            border:1px solid red;
-            width: 60%;
-            left: 0px;
-            right: 0px;
-            bottom: 30px;
-            height: 60px;
-            margin: 20px auto;
-        }
-        textarea{
-            height: 95%;
-            width: 90%;
-        }
-        .submit-btn{
-            float: right;
-            margin: 10px 12px;
-        }
-        .message {
-            width: 90%; /* 设置为100%确保在父容器内 */
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin-left: 50px;
-            border-radius: 8px;
-            box-sizing: border-box;
-            word-wrap: break-word; /* 长单词换行 */
-            overflow: hidden; /* 超出部分隐藏 */
-            margin-bottom: 10px; /* 为了防止多个对话框堆叠在一起时的间隔 */
-        }
-
-        
+      .container {
+        border: 1px solid red;
+        width: 60%;
+        height: 800px;
+        margin: 60px auto;
+      }
+      .inputbox {
+        position: fixed;
+        border: 1px solid red;
+        width: 60%;
+        left: 0px;
+        right: 0px;
+        bottom: 30px;
+        height: 60px;
+        margin: 20px auto;
+      }
+      textarea {
+        height: 95%;
+        width: 90%;
+      }
+      .submit-btn {
+        float: right;
+        margin: 10px 12px;
+      }
+      .message {
+        width: 90%; /* 设置为100%确保在父容器内 */
+        background-color: #f0f0f0;
+        padding: 10px;
+        margin-left: 50px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        word-wrap: break-word; /* 长单词换行 */
+        overflow: hidden; /* 超出部分隐藏 */
+        margin-bottom: 10px; /* 为了防止多个对话框堆叠在一起时的间隔 */
+      }
+      .chats-list {
+        position: fixed;
+        left: 30px;
+        top: 60px;
+        border: 3px solid red;
+        width: 15%;
+        height: 800px;
+        background-color: #dddddd;
+      }
     </style>
-</head>
-<body>
+  </head> -->
+  <!-- <body>
+    <div class="chats-list">
+      <div>
+        <input type="text" placeholder="请输入对话名..." />
+        <button type="submit" class="btn btn-primary btn-sm">新对话</button>
+      </div>
+
+      <a href="/pass" class="chat-title">gggggggggggggggggggg</a>
+    </div>
     <div class="container">
-        <div class="message">
-            gggggggggggggggggggg
-        </div>
+      <div class="message">gggggggggggggggggggg</div>
     </div>
     <div class="inputbox">
-        <textarea name="question" id="question" rows="3" placeholder="请输入问题..."></textarea>
-        <div class="submit-btn">
-            <button type="button" class="btn btn-primary">Submit</button>
-        </div>
+      <textarea
+        name="question"
+        id="question"
+        rows="3"
+        placeholder="请输入问题..."
+      ></textarea>
+      <div class="submit-btn">
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
     </div>
-</body>
-</html>
+    <script src="{{ url_for('static', path='js/chat.js') }}"></script>
+  </body>
+</html> -->
+{% block content %}
+
+<div class="chats-list">
+    <div>
+      <input type="text" placeholder="请输入对话名..." />
+      <button type="submit" class="btn btn-primary btn-sm">新对话</button>
+    </div>
+
+    <a href="/pass" class="chat-title">gggggggggggggggggggg</a>
+  </div>
+  <div class="container">
+    <div class="message">gggggggggggggggggggg</div>
+  </div>
+  <div class="inputbox">
+    <textarea
+      name="question"
+      id="question"
+      rows="3"
+      placeholder="请输入问题..."
+    ></textarea>
+    <div class="submit-btn">
+      <button type="button" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+  <script src="{{ url_for('static', path='js/chat.js') }}"></script>
+
+{% endblock content %}

@@ -4,9 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        const formData = new FormData(loginForm);
-        const username = formData.get('username');
-        const password = formData.get('password');
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
         try {
             const response = await fetch('/token', {
@@ -16,18 +15,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: `grant_type=password&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
             });
-
+            
             if (response.ok) {
-                const data = await response.json();
-                const accessToken = data.access_token;
-
-                // 存储访问令牌，这里简单地使用 localStorage
-                localStorage.setItem('access_token', accessToken);
-
                 // 在这里可以进行其他操作，例如页面跳转等
                 console.log('Login successful');
+                window.location.href = '/chat'
             } else {
                 // 处理登录失败的情况
+                const pwdErrorEle = document.getElementById('pwd-error')
+                pwdErrorEle.textContent = '用户名或密码错误'
+
                 console.error('Login failed');
             }
         } catch (error) {
